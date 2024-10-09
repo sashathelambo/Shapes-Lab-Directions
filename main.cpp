@@ -4,9 +4,10 @@
 #include <sstream>
 #include <memory>
 #include <algorithm>
+#include <typeinfo>
+#include <iomanip>
 
 using namespace std;
-
 class Shape {
 public:
     virtual double getArea() const = 0;
@@ -71,6 +72,20 @@ public:
     }
 };
 
+class Square : public Rectangle {
+public:
+    Square(double side) : Rectangle(side, side) {}
+
+    void print() const override {
+        cout << "\033[34m" << "Square - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\033[0m" << endl;
+        cout << "\033[34m+----+\033[0m" << endl;
+        cout << "\033[34m|    |\033[0m" << endl;
+        cout << "\033[34m|    |\033[0m" << endl;
+        cout << "\033[34m|    |\033[0m" << endl;
+        cout << "\033[34m+----+\033[0m" << endl;
+    }
+};
+
 class RightTriangle : public Shape {
 private:
     double base;
@@ -98,17 +113,44 @@ public:
     }
 };
 
+class IsoscelesRightTriangle : public RightTriangle {
+public:
+    IsoscelesRightTriangle(double side) : RightTriangle(side, side) {}
+
+    void print() const override {
+        cout << "\033[35m" << "Isosceles Right Triangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\033[0m" << endl;
+        cout << "\033[35m*     \033[0m" << endl;
+        cout << "\033[35m**    \033[0m" << endl;
+        cout << "\033[35m* *   \033[0m" << endl;
+        cout << "\033[35m*  *  \033[0m" << endl;
+        cout << "\033[35m*****\033[0m" << endl;
+    }
+};
+
+void printAreaToScreen(Shape *s) {
+    string shapeName = typeid(*s).name();
+    size_t colonPos = shapeName.find_last_of(':');
+    if (colonPos != string::npos) {
+        shapeName = shapeName.substr(colonPos + 1);
+    }
+    cout << "\033[1;33m";
+    cout << "\nThe area of the " << shapeName << " is " << fixed << setprecision(2) << s->getArea() << endl;
+    cout << "\033[0m";
+}
+
 int main() {
     vector<unique_ptr<Shape>> shapes;
     
     shapes.push_back(make_unique<Circle>(5));
     shapes.push_back(make_unique<Rectangle>(4, 6));
     shapes.push_back(make_unique<RightTriangle>(3, 4));
+    shapes.push_back(make_unique<Square>(5));
+    shapes.push_back(make_unique<IsoscelesRightTriangle>(4));
 
     for (auto it = shapes.begin(); it != shapes.end(); ++it) {
-        cout << "\033[1;36m"; // Bright cyan color
+        cout << "\033[1;36m";
         (*it)->print();
-        cout << "\033[0m" << endl; // Reset color
+        cout << "\033[0m" << endl;
     }
 
     for (auto it = shapes.begin(); it != shapes.end(); ++it) {
@@ -118,6 +160,10 @@ int main() {
     for_each(shapes.begin(), shapes.end(), [](const auto& shape) {
         cout << "\033[35mShape - Area: " << shape->getArea() << "\033[0m" << endl;
     });
+
+    for (const auto& shape : shapes) {
+        printAreaToScreen(shape.get());
+    }
 
     return 0;
 }
