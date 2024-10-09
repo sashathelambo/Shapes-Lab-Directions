@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <typeinfo>
 #include <iomanip>
+#include <cassert>
 
 using namespace std;
 class Shape {
@@ -107,6 +108,33 @@ void printAreaToScreen(Shape *s) {
 }
 
 int main() {
+    // Test Circle
+    Circle circle(5);
+    assert(abs(circle.getArea() - 78.54) < 0.01);
+    assert(abs(circle.getPerimeter() - 31.42) < 0.01);
+
+    // Test Rectangle
+    Rectangle rectangle(4, 6);
+    assert(rectangle.getArea() == 24);
+    assert(rectangle.getPerimeter() == 20);
+
+    // Test Square
+    Square square(5);
+    assert(square.getArea() == 25);
+    assert(square.getPerimeter() == 20);
+
+    // Test RightTriangle
+    RightTriangle rightTriangle(3, 4);
+    assert(abs(rightTriangle.getArea() - 6) < 0.01);
+    assert(abs(rightTriangle.getPerimeter() - 12) < 0.01);
+
+    // Test IsoscelesRightTriangle
+    IsoscelesRightTriangle isoRightTriangle(4);
+    assert(abs(isoRightTriangle.getArea() - 8) < 0.01);
+    assert(abs(isoRightTriangle.getPerimeter() - 13.66) < 0.01);
+
+    cout << "All tests passed!" << endl;
+
     vector<unique_ptr<Shape>> shapes;
     
     shapes.push_back(make_unique<Circle>(5));
