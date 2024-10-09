@@ -120,11 +120,11 @@ int main() {
     }
 
     for (const auto& shape : shapes) {
-        cout << "Area: " << shape->getArea() << ", Perimeter: " << shape->getPerimeter() << endl;
+        cout << "Area: " << shape->getArea() << ", Perimeter: " << shape->getPerimeter() << "\n";
     }
 
     for_each(shapes.begin(), shapes.end(), [](const auto& shape) {
-        cout << "Shape - Area: " << shape->getArea() << endl;
+        cout << "Shape - Area: " << shape->getArea() << "\n";
     });
 
     for (const auto& shape : shapes) {
