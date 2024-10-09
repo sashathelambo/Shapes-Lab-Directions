@@ -32,15 +32,7 @@ public:
     }
 
     void print() const override {
-        cout << "\033[31m" << "Circle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\033[0m" << endl;
-        cout << "\033[31m    ****    \033[0m" << endl;
-        cout << "\033[31m  **    **  \033[0m" << endl;
-        cout << "\033[31m *        * \033[0m" << endl;
-        cout << "\033[31m*          *\033[0m" << endl;
-        cout << "\033[31m*          *\033[0m" << endl;
-        cout << "\033[31m *        * \033[0m" << endl;
-        cout << "\033[31m  **    **  \033[0m" << endl;
-        cout << "\033[31m    ****    \033[0m" << endl;
+        cout << "Circle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << endl;
     }
 };
 
@@ -61,14 +53,7 @@ public:
     }
 
     void print() const override {
-        cout << "\033[34m" << "Rectangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\033[0m" << endl;
-        cout << "\033[34m+--------+\033[0m" << endl;
-        cout << "\033[34m|        |\033[0m" << endl;
-        cout << "\033[34m|        |\033[0m" << endl;
-        cout << "\033[34m|        |\033[0m" << endl;
-        cout << "\033[34m|        |\033[0m" << endl;
-        cout << "\033[34m|        |\033[0m" << endl;
-        cout << "\033[34m+--------+\033[0m" << endl;
+        cout << "Rectangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << endl;
     }
 };
 
@@ -77,12 +62,7 @@ public:
     Square(double side) : Rectangle(side, side) {}
 
     void print() const override {
-        cout << "\033[34m" << "Square - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\033[0m" << endl;
-        cout << "\033[34m+----+\033[0m" << endl;
-        cout << "\033[34m|    |\033[0m" << endl;
-        cout << "\033[34m|    |\033[0m" << endl;
-        cout << "\033[34m|    |\033[0m" << endl;
-        cout << "\033[34m+----+\033[0m" << endl;
+        cout << "Square - Area: " << getArea() << ", Perimeter: " << getPerimeter() << endl;
     }
 };
 
@@ -104,12 +84,7 @@ public:
     }
 
     void print() const override {
-        cout << "\033[32m" << "Right Triangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\033[0m" << endl;
-        cout << "\033[32m*        \033[0m" << endl;
-        cout << "\033[32m**       \033[0m" << endl;
-        cout << "\033[32m* *      \033[0m" << endl;
-        cout << "\033[32m*  *     \033[0m" << endl;
-        cout << "\033[32m*****\033[0m" << endl;
+        cout << "Right Triangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << endl;
     }
 };
 
@@ -118,12 +93,7 @@ public:
     IsoscelesRightTriangle(double side) : RightTriangle(side, side) {}
 
     void print() const override {
-        cout << "\033[35m" << "Isosceles Right Triangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\033[0m" << endl;
-        cout << "\033[35m*     \033[0m" << endl;
-        cout << "\033[35m**    \033[0m" << endl;
-        cout << "\033[35m* *   \033[0m" << endl;
-        cout << "\033[35m*  *  \033[0m" << endl;
-        cout << "\033[35m*****\033[0m" << endl;
+        cout << "Isosceles Right Triangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << endl;
     }
 };
 
@@ -133,9 +103,7 @@ void printAreaToScreen(Shape *s) {
     if (colonPos != string::npos) {
         shapeName = shapeName.substr(colonPos + 1);
     }
-    cout << "\033[1;33m";
-    cout << "\nThe area of the " << shapeName << " is " << fixed << setprecision(2) << s->getArea() << endl;
-    cout << "\033[0m";
+    cout << "The area of the " << shapeName << " is " << fixed << setprecision(2) << s->getArea() << endl;
 }
 
 int main() {
@@ -147,18 +115,16 @@ int main() {
     shapes.push_back(make_unique<Square>(5));
     shapes.push_back(make_unique<IsoscelesRightTriangle>(4));
 
-    for (auto it = shapes.begin(); it != shapes.end(); ++it) {
-        cout << "\033[1;36m";
-        (*it)->print();
-        cout << "\033[0m" << endl;
+    for (const auto& shape : shapes) {
+        shape->print();
     }
 
-    for (auto it = shapes.begin(); it != shapes.end(); ++it) {
-        cout << "\033[33mArea: " << (*it)->getArea() << ", Perimeter: " << (*it)->getPerimeter() << "\033[0m" << endl;
+    for (const auto& shape : shapes) {
+        cout << "Area: " << shape->getArea() << ", Perimeter: " << shape->getPerimeter() << endl;
     }
 
     for_each(shapes.begin(), shapes.end(), [](const auto& shape) {
-        cout << "\033[35mShape - Area: " << shape->getArea() << "\033[0m" << endl;
+        cout << "Shape - Area: " << shape->getArea() << endl;
     });
 
     for (const auto& shape : shapes) {
