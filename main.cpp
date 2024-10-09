@@ -8,6 +8,7 @@
 #include <iomanip>
 
 using namespace std;
+
 class Shape {
 public:
     virtual double getArea() const = 0;
@@ -147,14 +148,14 @@ int main() {
     shapes.push_back(make_unique<Square>(5));
     shapes.push_back(make_unique<IsoscelesRightTriangle>(4));
 
-    for (auto it = shapes.begin(); it != shapes.end(); ++it) {
+    for (const auto& shape : shapes) {
         cout << "\033[1;36m";
-        (*it)->print();
+        shape->print();
         cout << "\033[0m" << endl;
     }
 
-    for (auto it = shapes.begin(); it != shapes.end(); ++it) {
-        cout << "\033[33mArea: " << (*it)->getArea() << ", Perimeter: " << (*it)->getPerimeter() << "\033[0m" << endl;
+    for (const auto& shape : shapes) {
+        cout << "\033[33mArea: " << shape->getArea() << ", Perimeter: " << shape->getPerimeter() << "\033[0m" << endl;
     }
 
     for_each(shapes.begin(), shapes.end(), [](const auto& shape) {
