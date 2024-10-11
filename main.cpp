@@ -158,6 +158,5 @@ int main() {
     for (const auto& shape : shapes) {
         printAreaToScreen(shape.get());
     }
-
     return 0;
 }
