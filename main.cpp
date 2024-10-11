@@ -7,7 +7,8 @@
 #include <typeinfo>
 #include <iomanip>
 #include <cassert>
-
+//https://gist.github.com/JBlond/2fea43a3049b38287e5e9cefc87b2124
+//https://github.com/fidian/ansi
 using namespace std;
 class Shape {
 public:
@@ -33,7 +34,7 @@ public:
     }
 
     void print() const override {
-        cout << "Circle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << endl;
+        cout << "\e[41m\e[0;36mCircle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\e[0m" << endl;
     }
 };
 
@@ -54,7 +55,7 @@ public:
     }
 
     void print() const override {
-        cout << "Rectangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << endl;
+        cout << "\e[41m\e[0;36mRectangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\e[0m" << endl;
     }
 };
 
@@ -63,7 +64,7 @@ public:
     Square(double side) : Rectangle(side, side) {}
 
     void print() const override {
-        cout << "Square - Area: " << getArea() << ", Perimeter: " << getPerimeter() << endl;
+        cout << "\e[41m\e[0;36mSquare - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\e[0m" << endl;
     }
 };
 
@@ -85,7 +86,7 @@ public:
     }
 
     void print() const override {
-        cout << "Right Triangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << endl;
+        cout << "\e[41m\e[0;36mRight Triangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\e[0m" << endl;
     }
 };
 
@@ -94,7 +95,7 @@ public:
     IsoscelesRightTriangle(double side) : RightTriangle(side, side) {}
 
     void print() const override {
-        cout << "Isosceles Right Triangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << endl;
+        cout << "\e[41m\e[0;36mIsosceles Right Triangle - Area: " << getArea() << ", Perimeter: " << getPerimeter() << "\e[0m" << endl;
     }
 };
 
@@ -104,7 +105,7 @@ void printAreaToScreen(Shape *s) {
     if (colonPos != string::npos) {
         shapeName = shapeName.substr(colonPos + 1);
     }
-    cout << "The area of the " << shapeName << " is " << fixed << setprecision(2) << s->getArea() << endl;
+    cout << "\e[41m\e[0;36mThe area of the " << shapeName << " is " << fixed << setprecision(2) << s->getArea() << "\e[0m" << endl;
 }
 
 int main() {
@@ -133,7 +134,7 @@ int main() {
     assert(abs(isoRightTriangle.getArea() - 8) < 0.01);
     assert(abs(isoRightTriangle.getPerimeter() - 13.66) < 0.01);
 
-    cout << "All tests passed!" << endl;
+    cout << "\e[41m\e[0;36mAll tests passed!\e[0m" << endl;
 
     vector<unique_ptr<Shape>> shapes;
     
@@ -146,14 +147,6 @@ int main() {
     for (const auto& shape : shapes) {
         shape->print();
     }
-
-    for (const auto& shape : shapes) {
-        cout << "Area: " << shape->getArea() << ", Perimeter: " << shape->getPerimeter() << "\n";
-    }
-
-    for_each(shapes.begin(), shapes.end(), [](const auto& shape) {
-        cout << "Shape - Area: " << shape->getArea() << "\n";
-    });
 
     for (const auto& shape : shapes) {
         printAreaToScreen(shape.get());
